@@ -1,8 +1,7 @@
-﻿namespace AdventOfCode
+﻿namespace AdventOfCode;
+
+interface Solver
 {
-    interface Solver
-    {
-        object PartOne(string input);
-        object? PartTwo(string input) => null;
-    }
+	object PartOne(string input);
+	object? PartTwo(string input) => null;
 }

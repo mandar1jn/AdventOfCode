@@ -20,6 +20,14 @@ namespace AdventOfCode
 			var yearArgument = new Argument<int>(name: "year", "The year of the problem");
 			var dayArgument = new Argument<int>(name: "day", "The day of the problem");
 
+			var createCommand = new Command("create");
+			createCommand.AddArgument(yearArgument);
+			createCommand.AddArgument(dayArgument);
+			createCommand.SetHandler((year, day) => {
+				SolutionCreator.Create(year, day);
+			}, yearArgument, dayArgument);
+			rootCommand.Add(createCommand);
+
 			var solutionCommand = new Command("solve");
 			solutionCommand.AddArgument(yearArgument);
 			solutionCommand.AddArgument(dayArgument);

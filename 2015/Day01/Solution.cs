@@ -1,33 +1,32 @@
-namespace AdventOfCode.Y2015.Day01
+namespace AdventOfCode.Y2015.Day01;
+
+[ProblemName("Not Quite Lisp")]
+internal class Solution : Solver
 {
-	[ProblemName("Not Quite Lisp")]
-	internal class Solution : Solver
+	public object PartOne(string input)
 	{
-		public object PartOne(string input)
+		int floor = 0;
+
+		for(int i = 0; i < input.Length; i++)
 		{
-			int floor = 0;
-
-			for(int i = 0; i < input.Length; i++)
-			{
-				floor += (input[i] == '(')? 1 : -1;
-			}
-
-			return floor;
+			floor += (input[i] == '(')? 1 : -1;
 		}
 
-		public object PartTwo(string input)
+		return floor;
+	}
+
+	public object PartTwo(string input)
+	{
+		int floor = 0;
+
+		for(int i = 0; i < input.Length; i++)
 		{
-			int floor = 0;
+			floor += (input[i] == '(')? 1 : -1;
 
-			for(int i = 0; i < input.Length; i++)
-			{
-				floor += (input[i] == '(')? 1 : -1;
-
-				if(floor < 0)
-					return i + 1;
-			}
-
-			return input.Length;
+			if(floor < 0)
+				return i + 1;
 		}
+
+		return input.Length;
 	}
 }

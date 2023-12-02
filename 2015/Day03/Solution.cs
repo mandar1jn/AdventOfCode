@@ -1,100 +1,99 @@
-namespace AdventOfCode.Y2015.Day03
+namespace AdventOfCode.Y2015.Day03;
+
+[ProblemName("Perfectly Spherical Houses in a Vacuum")]
+internal class Solution : Solver
 {
-	[ProblemName("Perfectly Spherical Houses in a Vacuum")]
-	internal class Solution : Solver
+	public object PartOne(string input)
 	{
-		public object PartOne(string input)
+		Dictionary<(int, int), int> houses = new();
+
+		int x = 0;
+		int y = 0;
+
+		houses.Add((0, 0), 2);
+
+		for(int i = 0; i < input.Length; i++)
 		{
-			Dictionary<(int, int), int> houses = new();
+			char direction = input.ElementAt(i);
 
-			int x = 0;
-			int y = 0;
+			if(direction == '>')
+				x++;
+			else if(direction == '<')
+				x--;
+			else if(direction == '^')
+				y++;
+			else if(direction == 'v')
+				y--;
 
-			houses.Add((0, 0), 2);
-
-			for(int i = 0; i < input.Length; i++)
+			if(houses.ContainsKey((x, y)))
 			{
-				char direction = input.ElementAt(i);
+				houses[(x, y)]++;
+			}
+			else
+			{
+				houses.Add((x, y), 1);
+			}
+		}
 
-				if(direction == '>')
-					x++;
-				else if(direction == '<')
-					x--;
-				else if(direction == '^')
-					y++;
-				else if(direction == 'v')
-					y--;
+		return houses.Count();
+	}
 
-				if(houses.ContainsKey((x, y)))
+	public object PartTwo(string input)
+	{
+		Dictionary<(int, int), int> houses = new();
+
+		int realX = 0;
+		int roboX = 0;
+		int realY = 0;
+		int roboY = 0;
+
+		houses.Add((0, 0), 2);
+
+		for(int i = 0; i < input.Length; i++)
+		{
+			char direction = input.ElementAt(i);
+			int xChange = 0;
+			int yChange = 0;
+
+			if(direction == '>')
+				xChange++;
+			else if(direction == '<')
+				xChange--;
+			else if(direction == '^')
+				yChange++;
+			else if(direction == 'v')
+				yChange--;
+
+			if(i % 2 == 0)
+			{
+				realX += xChange;
+				realY += yChange;
+
+				if(houses.ContainsKey((realX, realY)))
 				{
-					houses[(x, y)]++;
+					houses[(realX, realY)]++;
 				}
 				else
 				{
-					houses.Add((x, y), 1);
+					houses.Add((realX, realY), 1);
 				}
 			}
-
-			return houses.Count();
-		}
-
-		public object PartTwo(string input)
-		{
-			Dictionary<(int, int), int> houses = new();
-
-			int realX = 0;
-			int roboX = 0;
-			int realY = 0;
-			int roboY = 0;
-
-			houses.Add((0, 0), 2);
-
-			for(int i = 0; i < input.Length; i++)
+			else
 			{
-				char direction = input.ElementAt(i);
-				int xChange = 0;
-				int yChange = 0;
+				roboX += xChange;
+				roboY += yChange;
 
-				if(direction == '>')
-					xChange++;
-				else if(direction == '<')
-					xChange--;
-				else if(direction == '^')
-					yChange++;
-				else if(direction == 'v')
-					yChange--;
-
-				if(i % 2 == 0)
+				if(houses.ContainsKey((roboX, roboY)))
 				{
-					realX += xChange;
-					realY += yChange;
-
-					if(houses.ContainsKey((realX, realY)))
-					{
-						houses[(realX, realY)]++;
-					}
-					else
-					{
-						houses.Add((realX, realY), 1);
-					}
+					houses[(roboX, roboY)]++;
 				}
 				else
 				{
-					roboX += xChange;
-					roboY += yChange;
-
-					if(houses.ContainsKey((roboX, roboY)))
-					{
-						houses[(roboX, roboY)]++;
-					}
-					else
-					{
-						houses.Add((roboX, roboY), 1);
-					}
+					houses.Add((roboX, roboY), 1);
 				}
 			}
-
-			return houses.Count;
 		}
+
+		return houses.Count;
 	}
 }

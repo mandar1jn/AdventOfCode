@@ -1,14 +1,12 @@
-namespace AdventOfCode {
+namespace AdventOfCode;
 
-	[AttributeUsage(AttributeTargets.Class)]
-	internal class ProblemNameAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class)]
+internal class ProblemNameAttribute : Attribute
+{
+	public string Name;
+
+	public ProblemNameAttribute(string name)
 	{
-		public string Name;
-
-		public ProblemNameAttribute(string name)
-		{
-			this.Name = name;
-		}
+		this.Name = name;
 	}
-
 }
