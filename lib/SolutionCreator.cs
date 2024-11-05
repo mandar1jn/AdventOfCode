@@ -2,7 +2,8 @@ using System.Net;
 
 namespace AdventOfCode;
 
-class SolutionCreator {
+class SolutionCreator
+{
 
 	private static string GenerateFileText(int year, int day)
 	{
@@ -29,7 +30,7 @@ class SolutionCreator {
 	{
 		string directory = Path.Combine(Environment.CurrentDirectory, year.ToString(), $"Day{day.ToString().PadLeft(2, '0')}");
 
-		if(Directory.Exists(directory))
+		if (Directory.Exists(directory))
 		{
 			Console.WriteLine("A solution for this problem already exists");
 			return;
@@ -38,7 +39,7 @@ class SolutionCreator {
 		Directory.CreateDirectory(directory);
 
 		var cookieContainer = new CookieContainer();
-		cookieContainer.Add(new Cookie("session", "53616c7465645f5ff9e8efc38f6ad5723ba715ce0f4252fa40cd9279d07b1cfcfc4bb6d073b0025623d75c630ef7569d2ef49537c757493793f8ed6cd76b555e", "/", "adventofcode.com"));
+		cookieContainer.Add(new Cookie("session", "SESSION_TOKEN", "/", "adventofcode.com"));
 		using var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
 		using var client = new HttpClient(handler);
 		using var response = client.Send(new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{year}/day/{day}/input"));
