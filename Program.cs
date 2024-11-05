@@ -4,16 +4,16 @@ using System.Reflection;
 
 namespace AdventOfCode
 {
-    internal class Program
-    {
-        static async Task<int> Main(string[] args)
+	internal class Program
+	{
+		static async Task<int> Main(string[] args)
 		{
 			Type[] solverTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.IsClass && typeof(Solver).IsAssignableFrom(type)).ToArray();
 
-			var rootCommand = new RootCommand("Sample app for System.CommandLine");
+			var rootCommand = new RootCommand("Mandar1jn's system for advent of code");
 
-			rootCommand.SetHandler(() => 
-				{ 
+			rootCommand.SetHandler(() =>
+				{
 					Console.WriteLine("YEAR NUMBER");
 				});
 
@@ -23,7 +23,8 @@ namespace AdventOfCode
 			var createCommand = new Command("create");
 			createCommand.AddArgument(yearArgument);
 			createCommand.AddArgument(dayArgument);
-			createCommand.SetHandler((year, day) => {
+			createCommand.SetHandler((year, day) =>
+			{
 				SolutionCreator.Create(year, day);
 			}, yearArgument, dayArgument);
 			rootCommand.Add(createCommand);
@@ -32,8 +33,10 @@ namespace AdventOfCode
 			solutionCommand.AddArgument(yearArgument);
 			solutionCommand.AddArgument(dayArgument);
 
-			solutionCommand.SetHandler((year, day) => {
-				var solvers = solverTypes.Where(type => {
+			solutionCommand.SetHandler((year, day) =>
+			{
+				var solvers = solverTypes.Where(type =>
+				{
 
 					string[] namespaces = type.Namespace!.Split(".");
 					string yearString = namespaces[1];
@@ -45,7 +48,7 @@ namespace AdventOfCode
 					return problemYear == year && problemDay == day;
 				});
 
-				if(!solvers.Any())
+				if (!solvers.Any())
 				{
 					Console.WriteLine($"No solver found for {year}/{day}");
 					return;
@@ -60,7 +63,7 @@ namespace AdventOfCode
 
 				ProblemNameAttribute? problemName = solver.GetType().GetCustomAttribute<ProblemNameAttribute>();
 
-				if(problemName == null)
+				if (problemName == null)
 				{
 					Console.WriteLine("Could not resolve problem name. Forgot to add the ProblemName attribute?");
 					return;
@@ -71,7 +74,7 @@ namespace AdventOfCode
 				string[] files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, $"{year}", $"Day{day.ToString().PadLeft(2, '0')}"));
 				IEnumerable<string> possiblePaths = files.Where(file => file.EndsWith("input.txt"));
 
-				if(!possiblePaths.Any())
+				if (!possiblePaths.Any())
 				{
 					Console.WriteLine("No input.txt found.");
 					return;
@@ -85,7 +88,7 @@ namespace AdventOfCode
 
 				var partTwo = solver.PartTwo(input);
 
-				if(partTwo != null)
+				if (partTwo != null)
 				{
 					Console.WriteLine(partTwo);
 				}
@@ -95,5 +98,5 @@ namespace AdventOfCode
 
 			return await rootCommand.InvokeAsync(args);
 		}
-    }
+	}
 }
